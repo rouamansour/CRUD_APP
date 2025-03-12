@@ -23,8 +23,11 @@ public class OrderService {
     }
 
     public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        System.out.println("Saved Order: " + savedOrder);
+        return savedOrder;
     }
+
 
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);

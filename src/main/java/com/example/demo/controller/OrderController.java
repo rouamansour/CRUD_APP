@@ -16,9 +16,18 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        List<Order> orders = orderService.getAllOrders();
+        if (orders.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content if empty
+        }
+        return ResponseEntity.ok(orders); // 200 OK if there are orders
     }
 
     @GetMapping("/{id}")
@@ -28,8 +37,11 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.saveOrder(order);
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        System.out.println("📥 Received Order: " + order.toString()); // Log avant sauvegarde
+        Order savedOrder = orderService.saveOrder(order);
+        System.out.println("✅ Saved Order: " + savedOrder.toString()); // Log après sauvegarde
+        return ResponseEntity.ok(savedOrder);
     }
 
     @DeleteMapping("/{id}")

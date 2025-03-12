@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,9 +16,9 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    //@JsonManagedReference
     private List<Order> orders;
 
-    // Constructeurs
     public User() {}
 
     public User(Long id, String name, String email, List<Order> orders) {
