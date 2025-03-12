@@ -50,10 +50,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         logger.info("DELETE request received to delete user with ID: {}", id);
         userService.deleteUser(id);
         logger.info("User with ID {} deleted", id);
+
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User updatedUser = userService.updateUser(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
     }
 }

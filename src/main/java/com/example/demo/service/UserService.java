@@ -39,4 +39,14 @@ public class UserService {
         logger.info("Deleting user with ID: {}", id);
         userRepository.deleteById(id);
     }
+
+    public User updateUser(Long id, User userDetails) {
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        existingUser.setName(userDetails.getName());
+        existingUser.setEmail(userDetails.getEmail());
+        existingUser.setOrders(userDetails.getOrders());
+
+        return userRepository.save(existingUser);
+    }
 }
