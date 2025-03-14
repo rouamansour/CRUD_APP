@@ -28,6 +28,11 @@ public class User {
         this.orders = orders;
     }
 
+    public User(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
     // Getters et Setters
     public Long getId() {
         return id;
