@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Order;
-import com.example.demo.model.User;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    public Order createOrder(Order order) {
-        return orderRepository.save(order);
-    }
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }

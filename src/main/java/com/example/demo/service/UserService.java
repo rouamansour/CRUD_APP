@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -40,10 +40,16 @@ public class UserService {
 
         existingUser.setName(userDetails.getName());
         existingUser.setEmail(userDetails.getEmail());
-        existingUser.setOrders(userDetails.getOrders());
+
+        // Update the orders list properly
+        List<Order> updatedOrders = userDetails.getOrders();
+
+        existingUser.getOrders().clear();
+        existingUser.getOrders().addAll(updatedOrders);
 
         return userRepository.save(existingUser);
     }
+
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
