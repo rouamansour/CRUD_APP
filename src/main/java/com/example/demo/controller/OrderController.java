@@ -38,14 +38,16 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        System.out.println("📥 Received Order: " + order.toString()); // Log avant sauvegarde
+        System.out.println("📥 Received Order: " + order.toString());
         Order savedOrder = orderService.saveOrder(order);
-        System.out.println("✅ Saved Order: " + savedOrder.toString()); // Log après sauvegarde
+        System.out.println("✅ Saved Order: " + savedOrder.toString());
         return ResponseEntity.ok(savedOrder);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
+        return ResponseEntity.ok("Order deleted with success");
     }
+
 }
