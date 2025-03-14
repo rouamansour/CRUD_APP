@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Order;
+import com.example.demo.model.User;
 import com.example.demo.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,17 @@ public class OrderService {
         return savedOrder;
     }
 
-
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public Order updateOrder(Long id, Order orderDetails) {
+        Order existingOrder = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("order not found with id " + id));
+
+        existingOrder.setProduct(orderDetails.getProduct());
+        existingOrder.setAmount(orderDetails.getAmount());
+        existingOrder.setUser(orderDetails.getUser());
+
+        return orderRepository.save(existingOrder);
     }
 }

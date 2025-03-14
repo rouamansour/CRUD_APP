@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Order;
+import com.example.demo.model.User;
 import com.example.demo.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +50,12 @@ public class OrderController {
     public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.ok("Order deleted with success");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
+        Order updatedOrder = orderService.updateOrder(id, orderDetails);
+        return ResponseEntity.ok(updatedOrder);
     }
 
 }
