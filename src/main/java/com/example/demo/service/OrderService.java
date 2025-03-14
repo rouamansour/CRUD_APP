@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private UserRepository userRepository;
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -23,12 +26,9 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    public Order saveOrder(Order order) {
-        Order savedOrder = orderRepository.save(order);
-        System.out.println("Saved Order: " + savedOrder);
-        return savedOrder;
+    public Order createOrder(Order order) {
+        return orderRepository.save(order);
     }
-
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }

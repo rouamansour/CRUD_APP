@@ -25,11 +25,6 @@ public class UserService {
         return users;
     }
 
-    public Optional<User> getUserById(Long id) {
-        logger.info("Fetching user with ID: {}", id);
-        return userRepository.findById(id);
-    }
-
     public User saveUser(User user) {
         logger.info("Saving user: {}", user);
         return userRepository.save(user);
@@ -49,4 +44,8 @@ public class UserService {
 
         return userRepository.save(existingUser);
     }
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
 }

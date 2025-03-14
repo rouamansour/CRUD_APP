@@ -66,7 +66,6 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
                 ", product='" + product + '\'' +
                 ", amount=" + amount +
                 ", user=" + (user != null ? user.getId() : "null") +

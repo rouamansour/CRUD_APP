@@ -29,19 +29,6 @@ public class UserController {
         return users;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        logger.info("GET request received to fetch user with ID: {}", id);
-        Optional<User> user = userService.getUserById(id);
-        if (user.isPresent()) {
-            logger.info("User with ID {} found", id);
-            return ResponseEntity.ok(user.get());
-        } else {
-            logger.warn("User with ID {} not found", id);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         logger.info("POST request received to create a user: {}", user);
@@ -66,4 +53,14 @@ public class UserController {
         User updatedUser = userService.updateUser(id, userDetails);
         return ResponseEntity.ok(updatedUser);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
 }
