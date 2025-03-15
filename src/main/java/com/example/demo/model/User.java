@@ -15,7 +15,7 @@ public class User {
 
     private String name;
     private String email;
-
+    //private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
@@ -65,4 +65,12 @@ public class User {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    /*public String getPassword() {
+        return password;
+    }*/
+
+    /*public void setPassword(String encode) {
+        this.password=encode;
+    }*/
 }

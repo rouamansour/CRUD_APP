@@ -4,6 +4,7 @@ import com.example.demo.model.Order;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public List<User> getAllUsers() {
         logger.info("Fetching all users from the database");
         List<User> users = userRepository.findAll();
@@ -27,6 +30,7 @@ public class UserService {
 
     public User saveUser(User user) {
         logger.info("Saving user: {}", user);
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -41,7 +45,6 @@ public class UserService {
         existingUser.setName(userDetails.getName());
         existingUser.setEmail(userDetails.getEmail());
 
-        // Update the orders list properly
         List<Order> updatedOrders = userDetails.getOrders();
 
         existingUser.getOrders().clear();

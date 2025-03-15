@@ -34,9 +34,9 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.getAllOrders();
         if (orders.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content if empty
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(orders); // 200 OK if there are orders
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{id}")
@@ -47,7 +47,6 @@ public class OrderController {
 
     @PostMapping("/createOrder/{userId}")
     public ResponseEntity<Order> createOrder(@PathVariable Long userId, @RequestBody Order orderRequest) {
-        // Récupérer l'utilisateur avec l'ID donné
         Optional<User> optionalUser = userRepository.findById(userId);
 
         if (!optionalUser.isPresent()) {
@@ -56,19 +55,15 @@ public class OrderController {
 
         User user = optionalUser.get();
 
-        // Créer l'objet Order
         Order order = new Order();
         order.setProduct(orderRequest.getProduct());
         order.setAmount(orderRequest.getAmount());
-        order.setUser(user); // Lier la commande à l'utilisateur
+        order.setUser(user);
 
-        // Ajouter la commande à la liste des commandes de l'utilisateur (si nécessaire)
         user.getOrders().add(order);
 
-        // Sauvegarder la commande
         Order savedOrder = orderRepository.save(order);
 
-        // Sauvegarder l'utilisateur (si vous voulez persister l'utilisateur avec ses commandes mises à jour)
         userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
